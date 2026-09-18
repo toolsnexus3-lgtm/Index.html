@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>totennacht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================
+   RESET & BASE
+========================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow-x: hidden;
+}
+
+/* =========================
+   FULLSCREEN VIDEO BACKGROUND
+========================= */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    object-fit: cover;
+    pointer-events: none;
+    filter: none !important; /* Zero blur */
+}
+
+/* Dark overlay for readability */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.container {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+.profile-card {
+    position: relative;
+    width: 100%;
+    border: 1px solid rgba(0, 180, 255, 0.4);
+    border-radius: 24px;
+    background: rgba(8, 12, 20, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 40px 20px 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(0, 100, 255, 0.05);
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(90, 60, 180, 0.8);
+    box-shadow: 0 0 25px rgba(90, 60, 180, 0.5);
+    background-color: #1a1a2e;
+}
+
+.name {
+    margin-top: 20px;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #f0f0f0;
+}
+
+/* Bio with Typewriter Effect */
+.bio {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #a0a5b0;
+    letter-spacing: 0.5px;
+    text-align: center;
+    min-height: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    background-color: #a0a5b0;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Badges */
+.badges-container {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.badge {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+.badge:hover { transform: scale(1.1); }
+.badge svg { width: 100%; height: 100%; }
+
+/* Discord Icon */
+.discord-icon {
+    margin-top: 30px;
+    width: 44px;
+    height: 44px;
+    color: #5865F2;
+    filter: drop-shadow(0 0 10px rgba(88, 101, 242, 0.5));
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.discord-icon:hover { transform: scale(1.1); }
+.discord-icon svg { width: 100%; height: 100%; }
+
+/* Moon Icon */
+.moon-icon {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.moon-icon:hover { background: rgba(255, 255, 255, 0.1); }
+.moon-icon svg { width: 20px; height: 20px; color: #ffffff; }
+
+/* =========================
+   CARDS
+========================= */
+.card {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background: rgba(10, 14, 22, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.crypto-card { cursor: pointer; }
+.crypto-card:hover {
+    background: rgba(20, 26, 38, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.crypto-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.crypto-icon svg { width: 28px; height: 28px; }
+
+.crypto-name {
+    margin-left: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btc-bg { background: #F7931A; }
+.eth-bg { background: #627EEA; }
+.sol-bg { background: linear-gradient(135deg, #9945FF, #14F195); }
+.ltc-bg { background: #345D9D; }
+
+/* User Card */
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    background-color: #1a1a2e;
+}
+.user-info {
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.user-name {
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.online-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #23A55A;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(35, 165, 90, 0.6);
+}
+.user-handle {
+    font-size: 13px;
+    color: #8E9297;
+}
+
+/* =========================
+   TOAST NOTIFICATION
+========================= */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(15, 20, 30, 0.95);
+    border: 1px solid rgba(0, 180, 255, 0.4);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 180, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+.toast svg {
+    width: 18px; height: 18px;
+    color: #00d2ff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+    body { padding: 12px 10px; }
+    .profile-card { padding: 30px 16px 60px; }
+    .avatar { width: 100px; height: 100px; }
+    .name { font-size: 22px; }
+    .bio { font-size: 12px; }
+    .badges-container { gap: 12px; padding: 6px 16px; }
+    .card { padding: 12px 16px; }
+    .crypto-name { margin-left: 12px; font-size: 15px; }
+    .user-avatar { width: 40px; height: 40px; }
+    .user-info { margin-left: 12px; }
+    .moon-icon { bottom: 16px; left: 16px; width: 36px; height: 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================
+     FULLSCREEN BACKGROUND VIDEO
+     Plays automatically. Unmutes on the first click anywhere on the page.
+========================= -->
+<video id="bgVideo" autoplay loop muted playsinline class="bg-video">
+    <source src="https://files.catbox.moe/cj3mbl.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
+
+<div class="container">
+
+    <!-- PROFILE CARD -->
+    <section class="profile-card">
+        <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw-FK6nlfyrz20FGTfVObnTy9yH8b7DJTpLw&s" alt="totennacht">
+        
+        <h1 class="name">totennacht</h1>
+        
+        <p class="bio">
+            <span id="typewriter-text"></span><span class="cursor"></span>
+        </p>
+
+        <div class="badges-container">
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+            </div>
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+            </div>
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 22 12 12 22 2 12"></polygon>
+                </svg>
+            </div>
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/>
+                    <path d="M12 6v12M6 12h12"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="discord-icon">
+            <svg viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M60.1 4.4A58.7 58.7 0 0 0 46 0l-1.8 3.7a54.4 54.4 0 0 0-17.4 0L25 0a58.8 58.8 0 0 0-14.1 4.4C2 17.3-.4 29.8.8 42.1A58.8 58.8 0 0 0 18.2 51l4.2-5.7a36.3 36.3 0 0 1-6.6-3.2l1.6-1.2c12.8 6 26.8 6 39.4 0l1.7 1.2a36.6 36.6 0 0 1-6.6 3.2l4.2 5.7a58.7 58.7 0 0 0 17.4-8.9c1.4-15.5-2.5-27.9-13.4-37.7zM23.8 36.1c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8zm23.4 0c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8z"/>
+            </svg>
+        </div>
+
+        <div class="moon-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- CRYPTO CARDS -->
+    <section class="cards-container" style="display: flex; flex-direction: column; gap: 12px;">
+        
+        <div class="card crypto-card">
+            <div class="crypto-icon btc-bg">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16z" fill="#F7931A"/>
+                    <path d="M22.5 14.5c.3-2-1.2-3.1-3.2-3.8l.7-2.7-1.7-.4-.6 2.6c-.5-.1-1-.2-1.5-.3l.6-2.6-1.7-.4-.7 2.7c-.4-.1-.8-.2-1.2-.3l-2.3-.6-.4 1.8s1.2.3 1.2.3c.7.2.8.6.8 1l-.8 3.2c0 .1.1.2.2.2l-.2-.1-1.1 4.5c-.1.2-.3.5-.7.4 0 0-1.2-.3-1.2-.3l-.8 1.9 2.2.5c.4.1.8.2 1.2.3l-.7 2.8 1.7.4.7-2.7c.5.1 1 .3 1.5.4l-.7 2.7 1.7.4.7-2.8c2.9.5 5.1.3 6-2.3.7-2.1 0-3.3-1.5-4.1 1.1-.3 1.9-1 2.1-2.5zm-4.2 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.7c1.2.3 4.9.9 4.4 3zm.5-5.5c-.5 1.9-3.5.9-4.5.7l.8-3.4c1 .3 4.2.7 3.7 2.7z" fill="#fff"/>
+                </svg>
+            </div>
+            <div class="crypto-name">BTC</div>
+        </div>
+
+        <div class="card crypto-card">
+            <div class="crypto-icon eth-bg">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="16" fill="#627EEA"/>
+                    <path d="M16.5 4v8.9l7.5 3.3L16.5 4z" fill="#fff" fill-opacity="0.6"/>
+                    <path d="M16.5 4L9 16.2l7.5-3.3V4z" fill="#fff"/>
+                    <path d="M16.5 21.9V28l7.5-10.4-7.5 4.3z" fill="#fff" fill-opacity="0.6"/>
+                    <path d="M16.5 28v-6.1L9 17.6l7.5 10.4z" fill="#fff"/>
+                    <path d="M16.5 20.5l7.5-4.3-7.5-3.3v7.6z" fill="#fff" fill-opacity="0.2"/>
+                    <path d="M9 16.2l7.5 4.3v-7.6L9 16.2z" fill="#fff" fill-opacity="0.6"/>
+                </svg>
+            </div>
+            <div class="crypto-name">ETH</div>
+        </div>
+
+        <div class="card crypto-card">
+            <div class="crypto-icon sol-bg">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <path d="M9.5 21.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff"/>
+                    <path d="M9.5 7.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff" fill-opacity="0.6"/>
+                    <path d="M22.5 14.5h-13a.5.5 0 0 0-.4.8l2.3 2.7a.5.5 0 0 0 .4.2h13a.5.5 0 0 0 .4-.8l-2.3-2.7a.5.5 0 0 0-.4-.2z" fill="#fff"/>
+                </svg>
+            </div>
+            <div class="crypto-name">SOL</div>
+        </div>
+
+        <div class="card crypto-card">
+            <div class="crypto-icon ltc-bg">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="16" fill="#345D9D"/>
+                    <path d="M14.5 8.5l-2.5 12h9l-1 4h-9l1-4h-3l3-12h2.5z" fill="#fff"/>
+                    <path d="M13 17.5l1-4h2.5l-1 4H13z" fill="#fff"/>
+                </svg>
+            </div>
+            <div class="crypto-name">LTC</div>
+        </div>
+    </section>
+
+    <!-- USER CARD -->
+    <div class="card">
+        <img class="user-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw-FK6nlfyrz20FGTfVObnTy9yH8b7DJTpLw&s" alt="totennacht">
+        <div class="user-info">
+            <div class="user-name">
+                totennacht
+                <span class="online-dot"></span>
+            </div>
+            <div class="user-handle">@totennacht · ID: 1523427777515356173</div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast" class="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    User has not added an address
+</div>
+
+<script>
+// =========================
+// BACKGROUND VIDEO AUTOPLAY & SOUND LOGIC
+// =========================
+const bgVideo = document.getElementById('bgVideo');
+
+// 1. Force immediate unmuted playback
+bgVideo.muted = false;
+bgVideo.volume = 1.0;
+
+let playPromise = bgVideo.play();
+
+if (playPromise !== undefined) {
+    playPromise.then(() => {
+        console.log("Autoplay with sound succeeded.");
+    }).catch(error => {
+        // 2. If browser blocks it, play silently.
+        console.log("Autoplay blocked. Playing muted. Will unmute on first click.");
+        bgVideo.muted = true;
+        bgVideo.play().catch(e => console.log("Silent autoplay failed too:", e));
+    });
+}
+
+// 3. Unmute and play on ANY first user interaction (click anywhere)
+document.addEventListener('click', function unmute() {
+    if (bgVideo.muted) {
+        bgVideo.muted = false;
+        bgVideo.volume = 1.0;
+        bgVideo.play().catch(e => console.log("Resume play failed:", e));
+    }
+}, { once: true });
+
+// =========================
+// TOAST NOTIFICATION LOGIC
+// =========================
+const toast = document.getElementById('toast');
+let toastTimeout;
+
+document.querySelectorAll('.crypto-card').forEach(card => {
+    card.addEventListener('click', () => {
+        clearTimeout(toastTimeout);
+        toast.classList.add('show');
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    });
+});
+
+// =========================
+// TYPEWRITER EFFECT FOR BIO
+// =========================
+const bioText = document.getElementById('typewriter-text');
+const phrases = ["lua dev", "web dev", "i love nex", "fuck cold done"];
+
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typingSpeed = 100;
+
+function type() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (isDeleting) {
+        bioText.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+    } else {
+        bioText.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 120;
+    }
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 2000;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 500;
+    }
+
+    setTimeout(type, typingSpeed);
+}
+
+setTimeout(type, 500);
+</script>
+
+</body>
+</html>
