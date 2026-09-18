@@ -20,44 +20,18 @@ body {
 }
 
 /* =========================
-   FULLSCREEN VIDEO BACKGROUND
+   FULLSCREEN IMAGE BACKGROUND
 ========================= */
-.bg-video {
+.bg-image {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: -2; object-fit: cover; pointer-events: none; filter: none !important;
+    z-index: -2; 
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVoFvLzUNfAncDKM99X8jGSi-YCVeyh3YabA&s') center/cover no-repeat;
+    background-attachment: fixed;
 }
-.bg-overlay { position: fixed; inset: 0; z-index: -1; background: rgba(0,0,0,0.55); }
-
-/* =========================
-   SOUND BUTTON (CLICK HERE)
-========================= */
-.sound-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: rgba(15, 20, 30, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    z-index: 1000;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 5px;
-    transition: background 0.2s, transform 0.2s;
-    backdrop-filter: blur(5px);
-}
-
-.sound-btn:hover {
-    background: rgba(40, 40, 40, 0.9);
-    transform: scale(1.05);
+/* Dark overlay for readability, matching the picture's mood */
+.bg-overlay { 
+    position: fixed; inset: 0; z-index: -1; 
+    background: rgba(0, 0, 0, 0.65); 
 }
 
 /* =========================
@@ -251,22 +225,14 @@ body {
     .music-info { margin-left: 12px; }
     .music-controls { gap: 12px; margin-left: 12px; }
     .moon-icon { bottom: 16px; left: 16px; width: 36px; height: 36px; }
-    .sound-btn { bottom: 20px; right: 20px; width: 55px; height: 55px; font-size: 9px; }
 }
 </style>
 </head>
 <body>
 
-<!-- =========================
-     FULLSCREEN BACKGROUND VIDEO
-========================= -->
-<video id="bgVideo" autoplay loop muted playsinline class="bg-video">
-    <source src="https://files.catbox.moe/cj3mbl.mp4" type="video/mp4">
-</video>
+<!-- FULLSCREEN IMAGE BACKGROUND -->
+<div class="bg-image"></div>
 <div class="bg-overlay"></div>
-
-<!-- SOUND BUTTON -->
-<button id="soundBtn" class="sound-btn">click here</button>
 
 <div class="container">
 
@@ -371,51 +337,6 @@ body {
 </div>
 
 <script>
-// =========================
-// BACKGROUND VIDEO & SOUND LOGIC
-// =========================
-const bgVideo = document.getElementById('bgVideo');
-const soundBtn = document.getElementById('soundBtn');
-
-// 1. Try to autoplay with sound immediately
-bgVideo.muted = false;
-bgVideo.volume = 1.0;
-
-let playPromise = bgVideo.play();
-
-if (playPromise !== undefined) {
-    playPromise.then(() => {
-        console.log("Autoplay with sound succeeded.");
-        soundBtn.style.display = 'none';
-    }).catch(error => {
-        console.log("Autoplay blocked. Showing sound button.");
-        bgVideo.muted = true;
-        bgVideo.play().catch(e => console.log("Silent autoplay failed too:", e));
-        soundBtn.style.display = 'flex';
-    });
-}
-
-// 2. Handle the button click
-soundBtn.addEventListener('click', () => {
-    bgVideo.muted = false;
-    bgVideo.volume = 1.0;
-    bgVideo.play().then(() => {
-        soundBtn.style.display = 'none';
-    }).catch(err => {
-        console.log("Manual play failed:", err);
-    });
-});
-
-// 3. Fallback: Also unmute if the user clicks anywhere else on the page
-document.addEventListener('click', function unmute() {
-    if (bgVideo.muted) {
-        bgVideo.muted = false;
-        bgVideo.volume = 1.0;
-        bgVideo.play().catch(e => console.log("Resume play failed:", e));
-        soundBtn.style.display = 'none';
-    }
-}, { once: true });
-
 // =========================
 // TOAST NOTIFICATION LOGIC
 // =========================
