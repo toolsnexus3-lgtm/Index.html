@@ -26,7 +26,7 @@ body {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: -2; object-fit: cover; pointer-events: none; filter: none !important;
 }
-.bg-overlay { position: fixed; inset: 0; z-index: -1; background: rgba(0,0,0,0.45); }
+.bg-overlay { position: fixed; inset: 0; z-index: -1; background: rgba(0,0,0,0.55); }
 
 /* =========================
    SOUND BUTTON (CLICK HERE)
@@ -72,22 +72,25 @@ body {
    PROFILE CARD
 ========================= */
 .profile-card {
-    position: relative; width: 100%; border: 1px solid rgba(0,180,255,0.4);
-    border-radius: 24px; background: rgba(8,12,20,0.65); backdrop-filter: blur(12px);
+    position: relative; width: 100%; border: 1px solid rgba(0, 180, 255, 0.4);
+    border-radius: 24px; background: rgba(8, 12, 20, 0.65); backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px); padding: 40px 20px 70px;
     display: flex; flex-direction: column; align-items: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(0,100,255,0.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(0, 100, 255, 0.05);
 }
 .avatar {
     width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
-    border: 2px solid rgba(90,60,180,0.8); box-shadow: 0 0 25px rgba(90,60,180,0.5);
+    border: 2px solid rgba(90, 60, 180, 0.8); box-shadow: 0 0 25px rgba(90, 60, 180, 0.5);
     background-color: #1a1a2e;
 }
-.name { margin-top: 20px; font-size: 26px; font-weight: 400; letter-spacing: 2px; color: #f0f0f0; }
+.name { 
+    margin-top: 20px; font-size: 38px; font-weight: 400; letter-spacing: 4px; color: #f5f5f5; 
+    font-family: Georgia, "Times New Roman", serif; /* Serif font like the image */
+}
 
 /* Bio with Typewriter Effect & 1% blur */
 .bio {
-    margin-top: 10px; font-size: 14px; color: #a0a5b0; letter-spacing: 0.5px;
+    margin-top: 12px; font-size: 14px; color: #a0a5b0; letter-spacing: 0.5px;
     text-align: center; min-height: 20px; font-weight: 500;
     display: flex; align-items: center; justify-content: center; gap: 2px;
     filter: blur(1px); /* 1% blur */
@@ -101,13 +104,13 @@ body {
 
 /* Badges */
 .badges-container {
-    margin-top: 24px; display: flex; align-items: center; gap: 16px;
-    padding: 8px 24px; border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 50px; background: rgba(0,0,0,0.4);
+    margin-top: 24px; display: flex; align-items: center; gap: 18px;
+    padding: 8px 24px; border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px; background: rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 .badge {
-    width: 20px; height: 20px; display: flex; align-items: center;
+    width: 22px; height: 22px; display: flex; align-items: center;
     justify-content: center; transition: transform 0.2s;
 }
 .badge:hover { transform: scale(1.1); }
@@ -115,8 +118,8 @@ body {
 
 /* Discord Icon */
 .discord-icon {
-    margin-top: 30px; width: 44px; height: 44px; color: #5865F2;
-    filter: drop-shadow(0 0 10px rgba(88,101,242,0.5)); cursor: pointer;
+    margin-top: 30px; width: 48px; height: 48px; color: #5865F2;
+    filter: drop-shadow(0 0 12px rgba(88, 101, 242, 0.6)); cursor: pointer;
     transition: transform 0.2s;
 }
 .discord-icon:hover { transform: scale(1.1); }
@@ -125,35 +128,51 @@ body {
 /* Moon Icon */
 .moon-icon {
     position: absolute; bottom: 24px; left: 24px; width: 44px; height: 44px;
-    border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(0,0,0,0.5); display: flex; align-items: center;
+    border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.5); display: flex; align-items: center;
     justify-content: center; cursor: pointer; transition: background 0.2s;
 }
-.moon-icon:hover { background: rgba(255,255,255,0.1); }
+.moon-icon:hover { background: rgba(255, 255, 255, 0.1); }
 .moon-icon svg { width: 20px; height: 20px; color: #ffffff; }
 
 /* =========================
    CARDS
 ========================= */
 .card {
-    width: 100%; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
-    background: rgba(10,14,22,0.7); backdrop-filter: blur(10px);
+    width: 100%; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    background: rgba(10, 14, 22, 0.7); backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); padding: 16px 20px;
-    display: flex; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    display: flex; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     transition: border-color 0.2s, background 0.2s;
 }
 .crypto-card { cursor: pointer; }
-.crypto-card:hover { background: rgba(20,26,38,0.8); border-color: rgba(255,255,255,0.2); }
+.crypto-card:hover { background: rgba(20, 26, 38, 0.8); border-color: rgba(255, 255, 255, 0.2); }
 .crypto-icon {
     width: 44px; height: 44px; border-radius: 50%; display: flex;
     align-items: center; justify-content: center; flex-shrink: 0;
 }
 .crypto-icon svg { width: 28px; height: 28px; }
-.crypto-name { margin-left: 16px; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; }
+.crypto-name { margin-left: 16px; font-size: 18px; font-weight: 500; letter-spacing: 0.5px; }
+
+/* Specific Crypto Colors */
 .btc-bg { background: #F7931A; }
 .eth-bg { background: #627EEA; }
 .sol-bg { background: linear-gradient(135deg, #9945FF, #14F195); }
 .ltc-bg { background: #345D9D; }
+
+/* BTC Loading Ring */
+.btc-ring {
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0%, #00d2ff 50%, #3a7bd5 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+    animation: spin 1.5s linear infinite;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* User Card */
 .user-avatar {
@@ -164,9 +183,38 @@ body {
 .user-name { font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .online-dot {
     width: 8px; height: 8px; background-color: #23A55A; border-radius: 50%;
-    box-shadow: 0 0 8px rgba(35,165,90,0.6);
+    box-shadow: 0 0 8px rgba(35, 165, 90, 0.6);
 }
 .user-handle { font-size: 13px; color: #8E9297; }
+
+/* Music Player */
+.music-cover {
+    width: 48px; height: 48px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
+}
+.music-info {
+    margin-left: 16px; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;
+}
+.music-title { font-size: 14px; font-weight: 600; color: #f0f0f0; }
+.music-url {
+    font-size: 12px; color: #8E9297; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.music-progress { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.music-time { font-size: 11px; color: #8E9297; min-width: 28px; }
+.progress-bar {
+    flex: 1; height: 3px; background: rgba(255, 255, 255, 0.15); border-radius: 2px; position: relative;
+}
+.progress-fill {
+    position: absolute; left: 0; top: 0; height: 100%; width: 45%;
+    background: #ffffff; border-radius: 2px;
+}
+.progress-thumb {
+    position: absolute; right: -4px; top: 50%; transform: translateY(-50%);
+    width: 8px; height: 8px; background: #ffffff; border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+.music-controls { display: flex; align-items: center; gap: 16px; margin-left: 16px; }
+.music-controls svg { width: 18px; height: 18px; color: #ffffff; cursor: pointer; transition: opacity 0.2s; }
+.music-controls svg:hover { opacity: 0.7; }
 
 /* =========================
    TOAST NOTIFICATION
@@ -174,12 +222,12 @@ body {
 .toast {
     position: fixed; bottom: 30px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: rgba(15,20,30,0.95); border: 1px solid rgba(0,180,255,0.4);
+    background: rgba(15, 20, 30, 0.95); border: 1px solid rgba(0, 180, 255, 0.4);
     color: #fff; padding: 14px 28px; border-radius: 14px; font-size: 14px;
     font-weight: 500; opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1000; backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0,180,255,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 180, 255, 0.1);
     display: flex; align-items: center; gap: 10px;
 }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -192,13 +240,16 @@ body {
     body { padding: 12px 10px; }
     .profile-card { padding: 30px 16px 60px; }
     .avatar { width: 100px; height: 100px; }
-    .name { font-size: 22px; }
+    .name { font-size: 30px; letter-spacing: 2px; }
     .bio { font-size: 12px; }
     .badges-container { gap: 12px; padding: 6px 16px; }
     .card { padding: 12px 16px; }
     .crypto-name { margin-left: 12px; font-size: 15px; }
     .user-avatar { width: 40px; height: 40px; }
     .user-info { margin-left: 12px; }
+    .music-cover { width: 40px; height: 40px; }
+    .music-info { margin-left: 12px; }
+    .music-controls { gap: 12px; margin-left: 12px; }
     .moon-icon { bottom: 16px; left: 16px; width: 36px; height: 36px; }
     .sound-btn { bottom: 20px; right: 20px; width: 55px; height: 55px; font-size: 9px; }
 }
@@ -231,23 +282,54 @@ body {
         </p>
 
         <div class="badges-container">
+            <!-- Green G Badge -->
+            <div class="badge"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#23A55A"/><path d="M12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C14.5 18 16.6 16.5 17.5 14.5H12V12H20V14C20 18.418 16.418 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C14.8 2 17.3 3.2 19 5.2L16.5 7.5C15.3 6.5 13.8 6 12 6Z" fill="#ffffff"/></svg></div>
+            <!-- Tools Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <!-- Code Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+            <!-- Diamond Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 12 12 22 2 12"></polygon></svg></div>
+            <!-- Bow Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/><path d="M12 6v12M6 12h12"/></svg></div>
         </div>
 
-        <div class="discord-icon"><svg viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M60.1 4.4A58.7 58.7 0 0 0 46 0l-1.8 3.7a54.4 54.4 0 0 0-17.4 0L25 0a58.8 58.8 0 0 0-14.1 4.4C2 17.3-.4 29.8.8 42.1A58.8 58.8 0 0 0 18.2 51l4.2-5.7a36.3 36.3 0 0 1-6.6-3.2l1.6-1.2c12.8 6 26.8 6 39.4 0l1.7 1.2a36.6 36.6 0 0 1-6.6 3.2l4.2 5.7a58.7 58.7 0 0 0 17.4-8.9c1.4-15.5-2.5-27.9-13.4-37.7zM23.8 36.1c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8zm23.4 0c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8z"/></svg></div>
+        <div class="discord-icon">
+            <svg viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M60.1 4.4A58.7 58.7 0 0 0 46 0l-1.8 3.7a54.4 54.4 0 0 0-17.4 0L25 0a58.8 58.8 0 0 0-14.1 4.4C2 17.3-.4 29.8.8 42.1A58.8 58.8 0 0 0 18.2 51l4.2-5.7a36.3 36.3 0 0 1-6.6-3.2l1.6-1.2c12.8 6 26.8 6 39.4 0l1.7 1.2a36.6 36.6 0 0 1-6.6 3.2l4.2 5.7a58.7 58.7 0 0 0 17.4-8.9c1.4-15.5-2.5-27.9-13.4-37.7zM23.8 36.1c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8zm23.4 0c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8z"/></svg>
+        </div>
 
-        <div class="moon-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></div>
+        <div class="moon-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </div>
     </section>
 
     <!-- CRYPTO CARDS -->
     <section class="cards-container" style="display: flex; flex-direction: column; gap: 12px;">
-        <div class="card crypto-card"><div class="crypto-icon btc-bg"><svg viewBox="0 0 32 32" fill="none"><path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16z" fill="#F7931A"/><path d="M22.5 14.5c.3-2-1.2-3.1-3.2-3.8l.7-2.7-1.7-.4-.6 2.6c-.5-.1-1-.2-1.5-.3l.6-2.6-1.7-.4-.7 2.7c-.4-.1-.8-.2-1.2-.3l-2.3-.6-.4 1.8s1.2.3 1.2.3c.7.2.8.6.8 1l-.8 3.2c0 .1.1.2.2.2l-.2-.1-1.1 4.5c-.1.2-.3.5-.7.4 0 0-1.2-.3-1.2-.3l-.8 1.9 2.2.5c.4.1.8.2 1.2.3l-.7 2.8 1.7.4.7-2.7c.5.1 1 .3 1.5.4l-.7 2.7 1.7.4.7-2.8c2.9.5 5.1.3 6-2.3.7-2.1 0-3.3-1.5-4.1 1.1-.3 1.9-1 2.1-2.5zm-4.2 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.7c1.2.3 4.9.9 4.4 3zm.5-5.5c-.5 1.9-3.5.9-4.5.7l.8-3.4c1 .3 4.2.7 3.7 2.7z" fill="#fff"/></svg></div><div class="crypto-name">BTC</div></div>
-        <div class="card crypto-card"><div class="crypto-icon eth-bg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16.5 4v8.9l7.5 3.3L16.5 4z" fill="#fff" fill-opacity="0.6"/><path d="M16.5 4L9 16.2l7.5-3.3V4z" fill="#fff"/><path d="M16.5 21.9V28l7.5-10.4-7.5 4.3z" fill="#fff" fill-opacity="0.6"/><path d="M16.5 28v-6.1L9 17.6l7.5 10.4z" fill="#fff"/><path d="M16.5 20.5l7.5-4.3-7.5-3.3v7.6z" fill="#fff" fill-opacity="0.2"/><path d="M9 16.2l7.5 4.3v-7.6L9 16.2z" fill="#fff" fill-opacity="0.6"/></svg></div><div class="crypto-name">ETH</div></div>
-        <div class="card crypto-card"><div class="crypto-icon sol-bg"><svg viewBox="0 0 32 32" fill="none"><path d="M9.5 21.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff"/><path d="M9.5 7.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff" fill-opacity="0.6"/><path d="M22.5 14.5h-13a.5.5 0 0 0-.4.8l2.3 2.7a.5.5 0 0 0 .4.2h13a.5.5 0 0 0 .4-.8l-2.3-2.7a.5.5 0 0 0-.4-.2z" fill="#fff"/></svg></div><div class="crypto-name">SOL</div></div>
-        <div class="card crypto-card"><div class="crypto-icon ltc-bg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#345D9D"/><path d="M14.5 8.5l-2.5 12h9l-1 4h-9l1-4h-3l3-12h2.5z" fill="#fff"/><path d="M13 17.5l1-4h2.5l-1 4H13z" fill="#fff"/></svg></div><div class="crypto-name">LTC</div></div>
+        
+        <!-- BTC -->
+        <div class="card crypto-card">
+            <div class="crypto-icon btc-bg"><svg viewBox="0 0 32 32" fill="none"><path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16z" fill="#F7931A"/><path d="M22.5 14.5c.3-2-1.2-3.1-3.2-3.8l.7-2.7-1.7-.4-.6 2.6c-.5-.1-1-.2-1.5-.3l.6-2.6-1.7-.4-.7 2.7c-.4-.1-.8-.2-1.2-.3l-2.3-.6-.4 1.8s1.2.3 1.2.3c.7.2.8.6.8 1l-.8 3.2c0 .1.1.2.2.2l-.2-.1-1.1 4.5c-.1.2-.3.5-.7.4 0 0-1.2-.3-1.2-.3l-.8 1.9 2.2.5c.4.1.8.2 1.2.3l-.7 2.8 1.7.4.7-2.7c.5.1 1 .3 1.5.4l-.7 2.7 1.7.4.7-2.8c2.9.5 5.1.3 6-2.3.7-2.1 0-3.3-1.5-4.1 1.1-.3 1.9-1 2.1-2.5zm-4.2 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.7c1.2.3 4.9.9 4.4 3zm.5-5.5c-.5 1.9-3.5.9-4.5.7l.8-3.4c1 .3 4.2.7 3.7 2.7z" fill="#fff"/></svg></div>
+            <div class="crypto-name">BTC</div>
+            <div class="btc-ring"></div>
+        </div>
+
+        <!-- ETH -->
+        <div class="card crypto-card">
+            <div class="crypto-icon eth-bg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16.5 4v8.9l7.5 3.3L16.5 4z" fill="#fff" fill-opacity="0.6"/><path d="M16.5 4L9 16.2l7.5-3.3V4z" fill="#fff"/><path d="M16.5 21.9V28l7.5-10.4-7.5 4.3z" fill="#fff" fill-opacity="0.6"/><path d="M16.5 28v-6.1L9 17.6l7.5 10.4z" fill="#fff"/><path d="M16.5 20.5l7.5-4.3-7.5-3.3v7.6z" fill="#fff" fill-opacity="0.2"/><path d="M9 16.2l7.5 4.3v-7.6L9 16.2z" fill="#fff" fill-opacity="0.6"/></svg></div>
+            <div class="crypto-name">ETH</div>
+        </div>
+
+        <!-- SOL -->
+        <div class="card crypto-card">
+            <div class="crypto-icon sol-bg"><svg viewBox="0 0 32 32" fill="none"><path d="M9.5 21.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff"/><path d="M9.5 7.5h13a.5.5 0 0 1 .4.8l-2.3 2.7a.5.5 0 0 1-.4.2h-13a.5.5 0 0 1-.4-.8l2.3-2.7a.5.5 0 0 1 .4-.2z" fill="#fff" fill-opacity="0.6"/><path d="M22.5 14.5h-13a.5.5 0 0 0-.4.8l2.3 2.7a.5.5 0 0 0 .4.2h13a.5.5 0 0 0 .4-.8l-2.3-2.7a.5.5 0 0 0-.4-.2z" fill="#fff"/></svg></div>
+            <div class="crypto-name">SOL</div>
+        </div>
+
+        <!-- LTC -->
+        <div class="card crypto-card">
+            <div class="crypto-icon ltc-bg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#345D9D"/><path d="M14.5 8.5l-2.5 12h9l-1 4h-9l1-4h-3l3-12h2.5z" fill="#fff"/><path d="M13 17.5l1-4h2.5l-1 4H13z" fill="#fff"/></svg></div>
+            <div class="crypto-name">LTC</div>
+        </div>
     </section>
 
     <!-- USER CARD -->
@@ -256,6 +338,28 @@ body {
         <div class="user-info">
             <div class="user-name">totennacht<span class="online-dot"></span></div>
             <div class="user-handle">@totennacht · ID: 1523427777515356173</div>
+        </div>
+    </div>
+
+    <!-- MUSIC PLAYER -->
+    <div class="card music-card">
+        <img class="music-cover" src="https://img.youtube.com/vi/dL2EsR4gBXc/hqdefault.jpg" alt="Stephanie">
+        <div class="music-info">
+            <div class="music-title">Stephanie</div>
+            <div class="music-url">https://youtu.be/dL2EsR4gBXc</div>
+            <div class="music-progress">
+                <span class="music-time">1:12</span>
+                <div class="progress-bar">
+                    <div class="progress-fill">
+                        <div class="progress-thumb"></div>
+                    </div>
+                </div>
+                <span class="music-time">2:38</span>
+            </div>
+        </div>
+        <div class="music-controls">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
         </div>
     </div>
 </div>
@@ -332,7 +436,7 @@ document.querySelectorAll('.crypto-card').forEach(card => {
 // TYPEWRITER EFFECT FOR BIO
 // =========================
 const bioText = document.getElementById('typewriter-text');
-// Updated phrases exactly as requested
+// Phrases exactly as requested
 const phrases = ["lua dev", "web dev", "I love eldar", "i love nex", "i hate cold"];
 
 let phraseIndex = 0;
