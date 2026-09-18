@@ -84,10 +84,20 @@ body {
     background-color: #1a1a2e;
 }
 .name { margin-top: 20px; font-size: 26px; font-weight: 400; letter-spacing: 2px; color: #f0f0f0; }
+
+/* Bio with Typewriter Effect & 1% blur */
 .bio {
     margin-top: 10px; font-size: 14px; color: #a0a5b0; letter-spacing: 0.5px;
-    text-align: center; font-weight: 500;
+    text-align: center; min-height: 20px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 2px;
+    filter: blur(1px); /* 1% blur */
 }
+
+.cursor {
+    display: inline-block; width: 2px; height: 14px; background-color: #a0a5b0;
+    animation: blink 1s step-end infinite; vertical-align: middle;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
 /* Badges */
 .badges-container {
@@ -215,8 +225,10 @@ body {
         
         <h1 class="name">totennacht</h1>
         
-        <!-- Static Bio -->
-        <p class="bio">just enjoying life</p>
+        <!-- Typewriter Bio -->
+        <p class="bio">
+            <span id="typewriter-text"></span><span class="cursor"></span>
+        </p>
 
         <div class="badges-container">
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
@@ -269,15 +281,13 @@ let playPromise = bgVideo.play();
 
 if (playPromise !== undefined) {
     playPromise.then(() => {
-        // Autoplay with sound succeeded
         console.log("Autoplay with sound succeeded.");
         soundBtn.style.display = 'none';
     }).catch(error => {
-        // Autoplay was blocked. Play muted and show the button.
         console.log("Autoplay blocked. Showing sound button.");
         bgVideo.muted = true;
         bgVideo.play().catch(e => console.log("Silent autoplay failed too:", e));
-        soundBtn.style.display = 'flex'; // Show the button
+        soundBtn.style.display = 'flex';
     });
 }
 
@@ -286,7 +296,7 @@ soundBtn.addEventListener('click', () => {
     bgVideo.muted = false;
     bgVideo.volume = 1.0;
     bgVideo.play().then(() => {
-        soundBtn.style.display = 'none'; // Hide button on success
+        soundBtn.style.display = 'none';
     }).catch(err => {
         console.log("Manual play failed:", err);
     });
@@ -317,6 +327,46 @@ document.querySelectorAll('.crypto-card').forEach(card => {
         }, 2500);
     });
 });
+
+// =========================
+// TYPEWRITER EFFECT FOR BIO
+// =========================
+const bioText = document.getElementById('typewriter-text');
+// Updated phrases exactly as requested
+const phrases = ["lua dev", "web dev", "I love eldar", "i love nex", "i hate cold"];
+
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typingSpeed = 100;
+
+function type() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (isDeleting) {
+        bioText.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+    } else {
+        bioText.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 120;
+    }
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 2000; // Pause at the end of a phrase
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 500; // Pause before typing the next phrase
+    }
+
+    setTimeout(type, typingSpeed);
+}
+
+// Start the typewriter effect
+setTimeout(type, 500);
 </script>
 
 </body>
