@@ -28,7 +28,7 @@ body {
     background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVoFvLzUNfAncDKM99X8jGSi-YCVeyh3YabA&s') center/cover no-repeat;
     background-attachment: fixed;
 }
-/* Dark overlay for readability - reduced opacity for less blur */
+/* Dark overlay for readability */
 .bg-overlay { 
     position: fixed; inset: 0; z-index: -1; 
     background: rgba(0, 0, 0, 0.5); 
@@ -48,8 +48,8 @@ body {
 .profile-card {
     position: relative; width: 100%; border: 1px solid rgba(0, 180, 255, 0.4);
     border-radius: 24px; background: rgba(8, 12, 20, 0.65); 
-    backdrop-filter: blur(8px); /* Reduced blur */
-    -webkit-backdrop-filter: blur(8px); padding: 40px 20px 70px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); padding: 40px 20px;
     display: flex; flex-direction: column; align-items: center;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(0, 100, 255, 0.05);
 }
@@ -63,12 +63,11 @@ body {
     font-family: Georgia, "Times New Roman", serif;
 }
 
-/* Bio with Typewriter Effect - No blur now */
+/* Bio with Typewriter Effect */
 .bio {
     margin-top: 12px; font-size: 14px; color: #a0a5b0; letter-spacing: 0.5px;
     text-align: center; min-height: 20px; font-weight: 500;
     display: flex; align-items: center; justify-content: center; gap: 2px;
-    /* filter removed */
 }
 
 .cursor {
@@ -100,23 +99,13 @@ body {
 .discord-icon:hover { transform: scale(1.1); }
 .discord-icon svg { width: 100%; height: 100%; }
 
-/* Moon Icon */
-.moon-icon {
-    position: absolute; bottom: 24px; left: 24px; width: 44px; height: 44px;
-    border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.5); display: flex; align-items: center;
-    justify-content: center; cursor: pointer; transition: background 0.2s;
-}
-.moon-icon:hover { background: rgba(255, 255, 255, 0.1); }
-.moon-icon svg { width: 20px; height: 20px; color: #ffffff; }
-
 /* =========================
    CARDS
 ========================= */
 .card {
     width: 100%; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
     background: rgba(10, 14, 22, 0.7); 
-    backdrop-filter: blur(6px); /* Reduced blur */
+    backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px); padding: 16px 20px;
     display: flex; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     transition: border-color 0.2s, background 0.2s;
@@ -130,7 +119,6 @@ body {
 .crypto-icon svg { width: 28px; height: 28px; }
 .crypto-name { margin-left: 16px; font-size: 18px; font-weight: 500; letter-spacing: 0.5px; }
 
-/* Specific Crypto Colors */
 .btc-bg { background: #F7931A; }
 .eth-bg { background: #627EEA; }
 .sol-bg { background: linear-gradient(135deg, #9945FF, #14F195); }
@@ -149,7 +137,7 @@ body {
 }
 .user-handle { font-size: 13px; color: #8E9297; }
 
-/* Music Player */
+/* Music Player UI */
 .music-cover {
     width: 48px; height: 48px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
 }
@@ -195,12 +183,18 @@ body {
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 .toast svg { width: 18px; height: 18px; color: #00d2ff; }
 
+/* Hidden YouTube Player */
+#player {
+    position: fixed; left: -100px; bottom: -100px;
+    width: 1px; height: 1px; opacity: 0; pointer-events: none;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 480px) {
     body { padding: 12px 10px; }
-    .profile-card { padding: 30px 16px 60px; }
+    .profile-card { padding: 30px 16px; }
     .avatar { width: 100px; height: 100px; }
     .name { font-size: 30px; letter-spacing: 2px; }
     .bio { font-size: 12px; }
@@ -212,7 +206,6 @@ body {
     .music-cover { width: 40px; height: 40px; }
     .music-info { margin-left: 12px; }
     .music-controls { gap: 12px; margin-left: 12px; }
-    .moon-icon { bottom: 16px; left: 16px; width: 36px; height: 36px; }
 }
 </style>
 </head>
@@ -236,24 +229,17 @@ body {
         </p>
 
         <div class="badges-container">
-            <!-- G Badge Removed -->
             <!-- Tools Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
             <!-- Code Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
-            <!-- Diamond Badge -->
-            <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 12 12 22 2 12"></polygon></svg></div>
-            <!-- Bow Badge -->
-            <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/><path d="M12 6v12M6 12h12"/></svg></div>
+            <!-- Diamond and Bow Removed -->
         </div>
 
         <div class="discord-icon">
             <svg viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M60.1 4.4A58.7 58.7 0 0 0 46 0l-1.8 3.7a54.4 54.4 0 0 0-17.4 0L25 0a58.8 58.8 0 0 0-14.1 4.4C2 17.3-.4 29.8.8 42.1A58.8 58.8 0 0 0 18.2 51l4.2-5.7a36.3 36.3 0 0 1-6.6-3.2l1.6-1.2c12.8 6 26.8 6 39.4 0l1.7 1.2a36.6 36.6 0 0 1-6.6 3.2l4.2 5.7a58.7 58.7 0 0 0 17.4-8.9c1.4-15.5-2.5-27.9-13.4-37.7zM23.8 36.1c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8zm23.4 0c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8z"/></svg>
         </div>
-
-        <div class="moon-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </div>
+        <!-- Moon Icon Removed -->
     </section>
 
     <!-- CRYPTO CARDS -->
@@ -263,7 +249,6 @@ body {
         <div class="card crypto-card">
             <div class="crypto-icon btc-bg"><svg viewBox="0 0 32 32" fill="none"><path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16z" fill="#F7931A"/><path d="M22.5 14.5c.3-2-1.2-3.1-3.2-3.8l.7-2.7-1.7-.4-.6 2.6c-.5-.1-1-.2-1.5-.3l.6-2.6-1.7-.4-.7 2.7c-.4-.1-.8-.2-1.2-.3l-2.3-.6-.4 1.8s1.2.3 1.2.3c.7.2.8.6.8 1l-.8 3.2c0 .1.1.2.2.2l-.2-.1-1.1 4.5c-.1.2-.3.5-.7.4 0 0-1.2-.3-1.2-.3l-.8 1.9 2.2.5c.4.1.8.2 1.2.3l-.7 2.8 1.7.4.7-2.7c.5.1 1 .3 1.5.4l-.7 2.7 1.7.4.7-2.8c2.9.5 5.1.3 6-2.3.7-2.1 0-3.3-1.5-4.1 1.1-.3 1.9-1 2.1-2.5zm-4.2 5.5c-.5 2.1-4.1 1-5.3.7l.9-3.7c1.2.3 4.9.9 4.4 3zm.5-5.5c-.5 1.9-3.5.9-4.5.7l.8-3.4c1 .3 4.2.7 3.7 2.7z" fill="#fff"/></svg></div>
             <div class="crypto-name">BTC</div>
-            <!-- Loading ring removed -->
         </div>
 
         <!-- ETH -->
@@ -298,7 +283,6 @@ body {
     <div class="card music-card">
         <img class="music-cover" src="https://img.youtube.com/vi/dL2EsR4gBXc/hqdefault.jpg" alt="fizzzy selbstverliebt">
         <div class="music-info">
-            <!-- Title Updated -->
             <div class="music-title">fizzzy selbstverliebt</div>
             <div class="music-url">https://youtu.be/dL2EsR4gBXc</div>
             <div class="music-progress">
@@ -324,6 +308,9 @@ body {
     User has not added an address
 </div>
 
+<!-- HIDDEN YOUTUBE PLAYER (THIS MAKES THE MUSIC WORK) -->
+<div id="player"></div>
+
 <script>
 // =========================
 // TOAST NOTIFICATION LOGIC
@@ -345,7 +332,6 @@ document.querySelectorAll('.crypto-card').forEach(card => {
 // TYPEWRITER EFFECT FOR BIO
 // =========================
 const bioText = document.getElementById('typewriter-text');
-// Phrases exactly as requested
 const phrases = ["lua dev", "web dev", "I love eldar", "i love nex", "i hate cold"];
 
 let phraseIndex = 0;
@@ -368,18 +354,62 @@ function type() {
 
     if (!isDeleting && charIndex === currentPhrase.length) {
         isDeleting = true;
-        typingSpeed = 2000; // Pause at the end of a phrase
+        typingSpeed = 2000;
     } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
-        typingSpeed = 500; // Pause before typing the next phrase
+        typingSpeed = 500;
     }
 
     setTimeout(type, typingSpeed);
 }
-
-// Start the typewriter effect
 setTimeout(type, 500);
+
+// =========================
+// YOUTUBE PLAYER LOGIC (AUTOPLAY FIX)
+// =========================
+let player = null;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player("player", {
+        videoId: "dL2EsR4gBXc", // The ID for "fizzzy selbstverliebt"
+        playerVars: {
+            autoplay: 1,
+            controls: 0,
+            loop: 1,
+            playlist: "dL2EsR4gBXc",
+            playsinline: 1,
+            rel: 0,
+            mute: 1 // MUST be 1 to allow autoplay
+        },
+        events: {
+            onReady: function(event) {
+                event.target.playVideo(); // Start playing muted immediately
+            }
+        }
+    });
+}
+
+// Load YouTube API
+const yt = document.createElement("script");
+yt.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(yt);
+
+// Force unmute on the very first user interaction anywhere on the page
+document.body.addEventListener('click', function unmute() {
+    if (player && typeof player.unMute === 'function') {
+        player.unMute();
+        player.setVolume(100); // Set to full volume
+    }
+}, { once: true });
+
+// Also do it for touch on mobile devices
+document.body.addEventListener('touchstart', function unmute() {
+    if (player && typeof player.unMute === 'function') {
+        player.unMute();
+        player.setVolume(100);
+    }
+}, { once: true });
 </script>
 
 </body>
