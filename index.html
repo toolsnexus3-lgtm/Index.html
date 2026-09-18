@@ -20,18 +20,17 @@ body {
 }
 
 /* =========================
-   FULLSCREEN IMAGE BACKGROUND
+   FULLSCREEN VIDEO BACKGROUND
 ========================= */
-.bg-image {
+.bg-video {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: -2; 
-    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVoFvLzUNfAncDKM99X8jGSi-YCVeyh3YabA&s') center/cover no-repeat;
-    background-attachment: fixed;
+    z-index: -2; object-fit: cover; pointer-events: none;
 }
+
 /* Dark overlay for readability */
 .bg-overlay { 
     position: fixed; inset: 0; z-index: -1; 
-    background: rgba(0, 0, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.55); 
 }
 
 /* =========================
@@ -137,34 +136,62 @@ body {
 }
 .user-handle { font-size: 13px; color: #8E9297; }
 
-/* Music Player UI */
-.music-cover {
-    width: 48px; height: 48px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
+/* =========================
+   SOUND TOGGLE BUTTON
+========================= */
+.sound-toggle {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(15, 20, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s, transform 0.2s;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
-.music-info {
-    margin-left: 16px; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;
+.sound-toggle:hover {
+    background: rgba(40, 40, 40, 0.9);
+    transform: scale(1.1);
 }
-.music-title { font-size: 14px; font-weight: 600; color: #f0f0f0; }
-.music-url {
-    font-size: 12px; color: #8E9297; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.sound-toggle svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
 }
-.music-progress { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-.music-time { font-size: 11px; color: #8E9297; min-width: 28px; }
-.progress-bar {
-    flex: 1; height: 3px; background: rgba(255, 255, 255, 0.15); border-radius: 2px; position: relative;
+.sound-toggle .icon-muted { display: none; }
+.sound-toggle .icon-unmuted { display: block; }
+.sound-toggle.is-muted .icon-muted { display: block; }
+.sound-toggle.is-muted .icon-unmuted { display: none; }
+
+/* Tooltip */
+.sound-toggle::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
 }
-.progress-fill {
-    position: absolute; left: 0; top: 0; height: 100%; width: 45%;
-    background: #ffffff; border-radius: 2px;
+.sound-toggle:hover::after {
+    opacity: 1;
 }
-.progress-thumb {
-    position: absolute; right: -4px; top: 50%; transform: translateY(-50%);
-    width: 8px; height: 8px; background: #ffffff; border-radius: 50%;
-    box-shadow: 0 0 4px rgba(0,0,0,0.5);
-}
-.music-controls { display: flex; align-items: center; gap: 16px; margin-left: 16px; }
-.music-controls svg { width: 18px; height: 18px; color: #ffffff; cursor: pointer; transition: opacity 0.2s; }
-.music-controls svg:hover { opacity: 0.7; }
 
 /* =========================
    TOAST NOTIFICATION
@@ -183,12 +210,6 @@ body {
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 .toast svg { width: 18px; height: 18px; color: #00d2ff; }
 
-/* Hidden YouTube Player */
-#player {
-    position: fixed; left: -100px; bottom: -100px;
-    width: 1px; height: 1px; opacity: 0; pointer-events: none;
-}
-
 /* =========================
    RESPONSIVE
 ========================= */
@@ -203,17 +224,32 @@ body {
     .crypto-name { margin-left: 12px; font-size: 15px; }
     .user-avatar { width: 40px; height: 40px; }
     .user-info { margin-left: 12px; }
-    .music-cover { width: 40px; height: 40px; }
-    .music-info { margin-left: 12px; }
-    .music-controls { gap: 12px; margin-left: 12px; }
+    .sound-toggle { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+    .sound-toggle svg { width: 18px; height: 18px; }
 }
 </style>
 </head>
 <body>
 
-<!-- FULLSCREEN IMAGE BACKGROUND -->
-<div class="bg-image"></div>
+<!-- =========================
+     FULLSCREEN VIDEO BACKGROUND
+========================= -->
+<video id="bgVideo" autoplay loop muted playsinline class="bg-video">
+    <source src="https://files.catbox.moe/ndmiz7.mp4" type="video/mp4">
+</video>
 <div class="bg-overlay"></div>
+
+<!-- SOUND TOGGLE BUTTON -->
+<button id="soundToggle" class="sound-toggle is-muted" data-tooltip="Sound on / off">
+    <!-- Muted Icon -->
+    <svg class="icon-muted" viewBox="0 0 24 24">
+        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+    </svg>
+    <!-- Unmuted Icon -->
+    <svg class="icon-unmuted" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
+</button>
 
 <div class="container">
 
@@ -233,13 +269,11 @@ body {
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
             <!-- Code Badge -->
             <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
-            <!-- Diamond and Bow Removed -->
         </div>
 
         <div class="discord-icon">
             <svg viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M60.1 4.4A58.7 58.7 0 0 0 46 0l-1.8 3.7a54.4 54.4 0 0 0-17.4 0L25 0a58.8 58.8 0 0 0-14.1 4.4C2 17.3-.4 29.8.8 42.1A58.8 58.8 0 0 0 18.2 51l4.2-5.7a36.3 36.3 0 0 1-6.6-3.2l1.6-1.2c12.8 6 26.8 6 39.4 0l1.7 1.2a36.6 36.6 0 0 1-6.6 3.2l4.2 5.7a58.7 58.7 0 0 0 17.4-8.9c1.4-15.5-2.5-27.9-13.4-37.7zM23.8 36.1c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8zm23.4 0c-3.8 0-7-3.5-7-7.8s3.1-7.8 7-7.8 7 3.5 7 7.8-3.1 7.8-7 7.8z"/></svg>
         </div>
-        <!-- Moon Icon Removed -->
     </section>
 
     <!-- CRYPTO CARDS -->
@@ -278,28 +312,6 @@ body {
             <div class="user-handle">@totennacht · ID: 1523427777515356173</div>
         </div>
     </div>
-
-    <!-- MUSIC PLAYER -->
-    <div class="card music-card">
-        <img class="music-cover" src="https://img.youtube.com/vi/dL2EsR4gBXc/hqdefault.jpg" alt="fizzzy selbstverliebt">
-        <div class="music-info">
-            <div class="music-title">fizzzy selbstverliebt</div>
-            <div class="music-url">https://youtu.be/dL2EsR4gBXc</div>
-            <div class="music-progress">
-                <span class="music-time">1:12</span>
-                <div class="progress-bar">
-                    <div class="progress-fill">
-                        <div class="progress-thumb"></div>
-                    </div>
-                </div>
-                <span class="music-time">2:38</span>
-            </div>
-        </div>
-        <div class="music-controls">
-            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-        </div>
-    </div>
 </div>
 
 <!-- TOAST NOTIFICATION -->
@@ -307,9 +319,6 @@ body {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
     User has not added an address
 </div>
-
-<!-- HIDDEN YOUTUBE PLAYER (THIS MAKES THE MUSIC WORK) -->
-<div id="player"></div>
 
 <script>
 // =========================
@@ -366,48 +375,35 @@ function type() {
 setTimeout(type, 500);
 
 // =========================
-// YOUTUBE PLAYER LOGIC (AUTOPLAY FIX)
+// VIDEO SOUND TOGGLE LOGIC
 // =========================
-let player = null;
+const bgVideo = document.getElementById('bgVideo');
+const soundToggle = document.getElementById('soundToggle');
 
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player("player", {
-        videoId: "dL2EsR4gBXc", // The ID for "fizzzy selbstverliebt"
-        playerVars: {
-            autoplay: 1,
-            controls: 0,
-            loop: 1,
-            playlist: "dL2EsR4gBXc",
-            playsinline: 1,
-            rel: 0,
-            mute: 1 // MUST be 1 to allow autoplay
-        },
-        events: {
-            onReady: function(event) {
-                event.target.playVideo(); // Start playing muted immediately
-            }
-        }
-    });
-}
+// Start muted to allow autoplay (browser requirement)
+bgVideo.muted = true;
+bgVideo.play().catch(e => console.log("Autoplay blocked:", e));
 
-// Load YouTube API
-const yt = document.createElement("script");
-yt.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(yt);
-
-// Force unmute on the very first user interaction anywhere on the page
-document.body.addEventListener('click', function unmute() {
-    if (player && typeof player.unMute === 'function') {
-        player.unMute();
-        player.setVolume(100); // Set to full volume
+// Toggle sound on button click
+soundToggle.addEventListener('click', () => {
+    if (bgVideo.muted) {
+        bgVideo.muted = false;
+        bgVideo.volume = 1.0; // Full volume
+        soundToggle.classList.remove('is-muted');
+        soundToggle.setAttribute('data-tooltip', 'Sound on / off');
+    } else {
+        bgVideo.muted = true;
+        soundToggle.classList.add('is-muted');
+        soundToggle.setAttribute('data-tooltip', 'Sound on / off');
     }
-}, { once: true });
+});
 
-// Also do it for touch on mobile devices
-document.body.addEventListener('touchstart', function unmute() {
-    if (player && typeof player.unMute === 'function') {
-        player.unMute();
-        player.setVolume(100);
+// Also unmute if user clicks anywhere else on the page (first interaction only)
+document.addEventListener('click', function firstInteraction() {
+    if (bgVideo.muted) {
+        bgVideo.muted = false;
+        bgVideo.volume = 1.0;
+        soundToggle.classList.remove('is-muted');
     }
 }, { once: true });
 </script>
